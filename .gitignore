@@ -6,3 +6,7 @@ vendor/*
 
 scripts/models/*
 !scripts/models/.gitkeep
+
+public/*
+!public/.htaccess
+!public/index.php

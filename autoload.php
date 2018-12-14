@@ -24,7 +24,6 @@ spl_autoload_register(function(string $class) {
 	global $classmap;
 
 	if (isset($classmap[$class]) === true) {
-		$classmap[$class]['date_updated'] = time();
 		include($classmap[$class]['path']);
 	} else {
 		$path = explode('\\', strtolower($class));
@@ -41,7 +40,7 @@ spl_autoload_register(function(string $class) {
 			}
 
 			if (isset($file) === true && file_exists($file) === true) {
-				$classmap[$class] = array('path' => $file, 'date_created' => time(), 'date_updated' => time());
+				$classmap[$class] = array('path' => $file, 'timestamp' => time());
 				include($file);
 			}
 		}

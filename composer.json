@@ -1,17 +1,17 @@
 {
 	"name": "phoxx-mvc/phoxx",
-    "description": "Phoxx MVC base project",
+	"description": "Phoxx MVC base project",
 	"require": {
 		"php" : ">=7.1.0",
 		"twig/twig": "2.4.*",
 		"smarty/smarty": "3.1.*",
 		"doctrine/orm": "2.5.*",
 		"filp/whoops": "2.1.*",
+		"mnsami/composer-custom-directory-installer": "1.1.*",
 		"phoxx-mvc/core": "0.1.*",
 		"phoxx-mvc/package-parameter": "0.1.*",
 		"phoxx-mvc/package-permission": "0.1.*",
-		"phoxx-mvc/package-user": "0.1.*",
-		"mnsami/composer-custom-directory-installer": "1.1.*"
+		"phoxx-mvc/package-user": "0.1.*"
 	},
 	"repositories": [
 		{

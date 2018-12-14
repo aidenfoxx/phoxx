@@ -7,6 +7,8 @@ define('PATH_CACHE', realpath(PATH_BASE.'/cache'));
 define('PATH_VENDOR', realpath(PATH_BASE.'/vendor'));
 define('PATH_PUBLIC', '');
 
+$startTime = microtime(TRUE);
+
 require(PATH_VENDOR.'/autoload.php');
 require(PATH_BASE.'/autoload.php');
 require(PATH_CORE.'/bootstrap.php');

@@ -2,9 +2,12 @@
 
 define('PATH_BASE', realpath(dirname(__FILE__).'/..'));
 define('PATH_CORE', realpath(PATH_BASE.'/core'));
+define('PATH_PACKAGES', realpath(PATH_BASE.'/packages'));
+define('PATH_CACHE', realpath(PATH_BASE.'/cache'));
+define('PATH_VENDOR', realpath(PATH_BASE.'/vendor'));
 
-require PATH_VENDOR.'/autoload.php';
-require PATH_BASE.'/autoload.php';
+require(PATH_VENDOR.'/autoload.php');
+require(PATH_BASE.'/autoload.php');
 
 use Doctrine\ORM\Events;
 use Doctrine\ORM\EntityManager;
@@ -12,14 +15,35 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Tools\DisconnectedClassMetadataFactory;
 use Doctrine\ORM\Tools\Export\ClassMetadataExporter;
 use Doctrine\ORM\Mapping\Driver\DatabaseDriver;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\Export\ExportException;
 
 use Phoxx\Core\Utilities\Config;
 
-echo 'Generating database model';
+function generateClassName($class) {
+	$className = '';
+	foreach (explode('_', $class) as $component) {
+		$className .= ucfirst($component);
+	}
+	return $className;
+}
 
-$namespace = 'Phoxx\\Core\\Models\\';
+function removePrefix($name, $prefix) {
+	if (($prefixLength = strlen($prefix)) > 0 && strncmp($name, $prefix, $prefixLength) === 0) {
+		return substr($name, $prefixLength);
+	}
+	return $name;
+}
+
+echo 'Generating database model(s)';
+
+$namespace;
 $tables = array();
+$config = Config::getCore()->getFile('database');
+
+
+$tablePrefix = $config->DATABASE_PREFIX;
+$classPrefix = generateClassName($tablePrefix);
 
 /**
  * Define parameters for core or package
@@ -33,67 +57,101 @@ while ($parameter = next($argv)) {
 		}
 	} else {
 		$tables[] = array(
-			'name' => $parameter,
-			'class' => ''
+			'table_name' => $parameter,
+			'class_name' => generateClassName($parameter)
 		);
 	}
 }
 
+/**
+ * Check we have table to generate models.
+ */
 if (empty($tables) === false) {
-	foreach ($tables as $key => $table) {
-		foreach (explode('_', $tables[$key]['name']) as $component) {
-			$tables[$key]['class'] .= ucfirst($component);
+	/**
+	 * Check we have a valid namespace.
+	 */
+	if (isset($namespace) === true) {
+		try {
+			$doctrineConfig = Setup::createAnnotationMetadataConfiguration(array(), true);
+			$entityManager = EntityManager::create(array(
+				'dbname' => $config->DATABASE_NAME,
+				'user' => $config->DATABASE_USER,
+				'password' => $config->DATABASE_PASSWORD,
+				'host' => $config->DATABASE_HOST,
+				'port' => $config->DATABASE_PORT,
+				'driver'   => 'pdo_mysql'
+			), $doctrineConfig);
+			$entityManager->getConnection()->connect();
+		} catch (Exception $e) {
+			echo PHP_EOL.'ERROR: Could not establish database connection';
+			exit;
 		}
-	}
-} else {
-	echo 'ERROR: Please define table to generate model';
-	exit;
-}
 
-$config = Config::getInstance()->getFile('database');
-$doctrineConfig = Setup::createAnnotationMetadataConfiguration(array(), false);
+		$databaseDriver = new DatabaseDriver($entityManager->getConnection()->getSchemaManager());
+		$databaseDriver->setNamespace($namespace);
 
-try {
-	$entityManager = EntityManager::create(array(
-		'dbname' => $config->DATABASE_NAME,
-		'user' => $config->DATABASE_USER,
-		'password' => $config->DATABASE_PASSWORD,
-		'host' => $config->DATABASE_HOST,
-		'port' => $config->DATABASE_PORT,
-		'driver'   => 'pdo_mysql'
-	), $doctrineConfig);
-	$entityManager->getConnection()->connect();
-} catch (Exception $e) {
-	echo 'ERROR: Could not establish database connection';
-	exit;
-}
+		$entityManager->getConfiguration()->setMetadataDriverImpl($databaseDriver);
 
-$databaseDriver = new DatabaseDriver($entityManager->getConnection()->getSchemaManager());
-$databaseDriver->setNamespace($namespace);
+		$metadataFactory = new DisconnectedClassMetadataFactory();
+		$metadataFactory->setEntityManager($entityManager);
 
-$entityManager->getConfiguration()->setMetadataDriverImpl($databaseDriver);
+		$metadata = array();
 
-$metadataFactory = new DisconnectedClassMetadataFactory();
-$metadataFactory->setEntityManager($entityManager);
+		/**
+		 * Generate metadata to export.
+		 */
+		foreach ($tables as $table) {
+			try {
+				$classMetadata = $metadataFactory->getMetadataFor($namespace.$table['class_name']);
 
-$metadata = array();
+				/**
+				 * Remove prefix from model data.
+				 */
+				$classMetadata->name = $namespace.removePrefix($table['class_name'], $classPrefix);
+				$classMetadata->rootEntityName = $namespace.removePrefix($table['class_name'], $classPrefix);
+				$classMetadata->table['name'] = removePrefix($table['table_name'], $tablePrefix);;
 
-foreach ($tables as $table) {
-	try {
-		$metadata[] = $metadataFactory->getMetadataFor($namespace.$table['class']);
-	} catch (InvalidArgumentException $e) {
-		echo 'ERROR: Unknown table `'.$table['name'].'`';
+				/**
+				 * Remove prefix from associations.
+				 */
+				foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
+					$targetEntityData = explode('\\', $mapping['targetEntity']);
+					$sourceEntityData = explode('\\', $mapping['sourceEntity']);
+
+					$targetEntityData[] = removePrefix(array_pop($targetEntityData), $classPrefix);
+					$sourceEntityData[] = removePrefix(array_pop($sourceEntityData), $classPrefix);
+
+					$classMetadata->associationMappings[$fieldName]['targetEntity'] = implode('\\', $targetEntityData);
+					$classMetadata->associationMappings[$fieldName]['sourceEntity'] = implode('\\', $sourceEntityData);
+
+					if ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY && $mapping['isOwningSide'] === true) {
+						$classMetadata->associationMappings[$fieldName]['joinTable']['name'] = removePrefix($mapping['joinTable']['name'], $tablePrefix);
+					}
+				}
+
+				$metadata[] = $classMetadata;
+			} catch (InvalidArgumentException $e) {
+				echo PHP_EOL.'ERROR: Unknown table `'.$table['table_name'].'`';
+				exit;
+			}
+		}
+
+		/**
+		 * Export mappings.
+		 */
+		$metadataExporter = new ClassMetadataExporter();
+
+		try {
+			$exporter = $metadataExporter->getExporter('xml', PATH_BASE.'/scripts/models');
+			$exporter->setMetadata($metadata);
+			$exporter->export();
+		} catch (ExportException $e) {
+			echo PHP_EOL.'ERROR: Export failed. Ensure the file does not already exist';
+		}
+		
 		exit;
 	}
-}
-
-$metadataExporter = new ClassMetadataExporter();
-
-try {
-	$exporter = $metadataExporter->getExporter('xml', PATH_BASE.'/scripts/models');
-	$exporter->setMetadata($metadata);
-	$exporter->export();
-} catch (ExportException $e) {
-	echo 'ERROR: Export failed. Ensure the file does not already exist';
+	echo PHP_EOL.'ERROR: Package undefined';
 	exit;
 }
+echo PHP_EOL.'ERROR: No table(s) defined';

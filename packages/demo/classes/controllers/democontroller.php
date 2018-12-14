@@ -6,7 +6,7 @@ use Phoxx\Core\Renderer\View;
 use Phoxx\Core\Http\Response;
 use Phoxx\Core\Controllers\FrontController;
 
-class CoreController extends FrontController
+class DemoController extends FrontController
 {
 	public function index(): Response
 	{
@@ -20,12 +20,5 @@ class CoreController extends FrontController
 		return $this->display(new View('@demo/corecontroller/pagenotfound', array(
 			'title' => '404'
 		)), Response::HTTP_NOT_FOUND);
-	}
-
-	public function internalServerError(): Response
-	{
-		return $this->display(new View('@demo/corecontroller/internalservererror', array(
-			'title' => '500'
-		)), Response::HTTP_INTERNAL_SERVER_ERROR);
 	}
 }

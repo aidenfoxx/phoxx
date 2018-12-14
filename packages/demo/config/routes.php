@@ -2,8 +2,7 @@
 
 return array(
 	'GET' => array(
-		'' => array('Phoxx\Packages\Demo\Controllers\CoreController' => 'index'),
-		'_404_' => array('Phoxx\Packages\Demo\Controllers\CoreController' => 'pageNotFound'),
-		'_500_' => array('Phoxx\Packages\Demo\Controllers\CoreController' => 'internalServerError')
+		'' => array('Phoxx\Packages\Demo\Controllers\DemoController' => 'index'),
+		'_404_' => array('Phoxx\Packages\Demo\Controllers\DemoController' => 'pageNotFound')
 	)
 );

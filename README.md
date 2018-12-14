@@ -2,6 +2,8 @@
 
 ## TODO:
 
-- Test database caching
-- Implement base URL function for Requests
-- Add install/uninstall functionality to packages(?)
+- Test all caching
+- Implement Renderer extensions
+- Finish mailer class
+- Finish cache class (Memcached, Redis)
+- Implement file classes

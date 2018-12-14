@@ -6,8 +6,8 @@ use Phoxx\Core\Package\Package;
 /**
  * Load package routes.
  */
-foreach (Package::getInstance('demo')->config()->getFile('routes') as $method => $route) {
+foreach (Package::getInstance('demo')->getConfig()->getFile('routes') as $method => $route) {
 	foreach ($route as $path => $action) {
-		Router::core()->setRoute($path, $action, $method);
+		Router::getCore()->addRoute($path, $action, $method);
 	}
 }
