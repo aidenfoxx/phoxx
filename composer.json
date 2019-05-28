@@ -9,17 +9,17 @@
 		"filp/whoops": "2.1.*",
 		"sami/sami": "4.1.*",
 		"mnsami/composer-custom-directory-installer": "1.1.*",
-		"phoxx-mvc/core": "1.0-dev",
-		"phoxx-mvc/package-parameter": "1.0-dev",
-		"phoxx-mvc/package-permission": "1.0-dev",
-		"phoxx-mvc/package-user": "1.0-dev"
+		"phoxx-mvc/core": "dev",
+		"phoxx-mvc/package-parameter": "dev",
+		"phoxx-mvc/package-permission": "dev",
+		"phoxx-mvc/package-user": "dev"
 	},
 	"repositories": [
 		{
 			"type": "package",
 			"package": {
 				"name": "phoxx-mvc/core",
-				"version": "1.0-dev",
+				"version": "dev",
 				"source": {
 					"type": "git",
 					"url":  "https://github.com/phoxx-mvc/core.git",
@@ -31,8 +31,7 @@
 			"type": "package",
 			"package": {
 				"name": "phoxx-mvc/package-parameter",
-				"version": "1.0-dev",
-				
+				"version": "dev",
 				"source": {
 					"type": "git",
 					"url":  "https://github.com/phoxx-mvc/package-parameter.git",
@@ -44,7 +43,7 @@
 			"type": "package",
 			"package": {
 				"name": "phoxx-mvc/package-permission",
-				"version": "1.0-dev",
+				"version": "dev",
 				"source": {
 					"type": "git",
 					"url":  "https://github.com/phoxx-mvc/package-permission.git",
@@ -56,7 +55,7 @@
 			"type": "package",
 			"package": {
 				"name": "phoxx-mvc/package-user",
-				"version": "1.0-dev",
+				"version": "dev",
 				"source": {
 					"type": "git",
 					"url":  "https://github.com/phoxx-mvc/package-user.git",
