@@ -1,12 +1,15 @@
 cache/*
 !cache/.gitkeep
 
-vendor/*
-!vendor/.gitkeep
-
-scripts/models/*
-!scripts/models/.gitkeep
+docs/*
+!docs/.gitkeep
 
 public/*
 !public/.htaccess
 !public/index.php
+
+scripts/models/*
+!scripts/models/.gitkeep
+
+vendor/*
+!vendor/.gitkeep

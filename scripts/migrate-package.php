@@ -16,41 +16,45 @@ echo 'Migrating package(s)';
 
 array_shift($argv);
 
-if (count($argv) > 0) {
-	foreach ($argv as $package) {
-		if (file_exists(PATH_PACKAGES.'/'.$package) === true) {
-			$namespace = 'Phoxx\\Packages\\'.strtolower($package).'\\Migrations';
-			$migrations = PATH_PACKAGES.'/'.$package.'/classes/migrations';
-
-			/**
-			 * Load potential migrations.
-			 */
-			foreach (scandir($migrations) as $file) {
-				if (substr($file, -4) === '.php') {
-					include($migrations.'/'.$file);
-				}
-			}
-
-			/**
-			 * Loop loaded classes to find potential migrations.
-			 */
-			foreach (get_declared_classes() as $class) {
-				if (substr(strtolower($class), 0, strlen($namespace)) === strtolower($namespace)) {
-					try {
-						$migration = new $class();
-						echo PHP_EOL.'Migrating class `'.$class.'`';
-						Migrator::getCore()->up($migration);
-					} catch (MigrationException $e) {
-						echo PHP_EOL.'ERROR: Failed to migrate class `'.$class.'`';
-						exit;
-					}
-				}
-			}
-		} else {
-			echo PHP_EOL.'ERROR: Invalid package defined';
-			exit;
-		}
-	}
+if (count($argv) === 0) {
+	echo PHP_EOL.'ERROR: Please define package to migrate';
 	exit;
 }
-echo PHP_EOL.'ERROR: Please define package to migrate';
+
+$migrator = new Migrator();
+
+foreach ($argv as $package) {
+	$package = strtolower($package);
+
+	if (file_exists(PATH_PACKAGES.'/'.$package) === false) {
+		echo PHP_EOL.'ERROR: Invalid package defined';
+		exit;
+	}
+
+	$namespace = 'Phoxx\\Packages\\'.$package.'\\Migrations';
+	$dir = PATH_PACKAGES.'/'.$package.'/classes/Migrations';
+
+	/**
+	 * Load potential migrations.
+	 */
+	foreach (scandir($dir) as $file) {
+		if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+			include($dir.'/'.$file);
+		}
+	}
+
+	/**
+	 * Loop loaded classes to find potential migrations.
+	 */
+	foreach (get_declared_classes() as $class) {
+		if (substr(strtolower($class), 0, strlen($namespace)) === strtolower($namespace)) {
+			try {
+				echo PHP_EOL.'Migrating class `'.$class.'`';
+				$migrator->up(new $class());
+			} catch (MigrationException $e) {
+				echo PHP_EOL.'ERROR: Failed to migrate class `'.$class.'`';
+				exit;
+			}
+		}
+	}
+}

@@ -1,13 +1,19 @@
 <?php
 
-use Phoxx\Core\Router\Router;
-use Phoxx\Core\Package\Package;
+use Phoxx\Core\Framework\Application;
+use Phoxx\Core\Framework\Exceptions\ServiceException;
+
+if (($config = Application::getInstance('core')->getService('config')) === null) {
+	throw new ServiceException('Cannot find `config` service.');
+}
+
+$router = Application::getInstance('core')->getRouter();
 
 /**
  * Load package routes.
  */
-foreach (Package::getInstance('demo')->getConfig()->getFile('routes') as $method => $route) {
+foreach ($config->getFile('@demo/routes') as $method => $route) {
 	foreach ($route as $path => $action) {
-		Router::getCore()->addRoute($path, $action, $method);
+		$router->setRoute($path, $action, $method);
 	}
 }

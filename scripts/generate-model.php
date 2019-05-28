@@ -37,12 +37,15 @@ function removePrefix($name, $prefix) {
 
 echo 'Generating database model(s)';
 
-$namespace;
+$namespace = null;
 $tables = array();
-$config = Config::getCore()->getFile('database');
 
+$config = new Config();
+$config->addPath(PATH_CORE.'/config');
 
-$tablePrefix = $config->DATABASE_PREFIX;
+$database = $config->getFile('database');
+
+$tablePrefix = $database->DATABASE_PREFIX;
 $classPrefix = generateClassName($tablePrefix);
 
 /**
@@ -70,15 +73,15 @@ if (empty($tables) === false) {
 	/**
 	 * Check we have a valid namespace.
 	 */
-	if (isset($namespace) === true) {
+	if ($namespace !== null) {
 		try {
 			$doctrineConfig = Setup::createAnnotationMetadataConfiguration(array(), true);
 			$entityManager = EntityManager::create(array(
-				'dbname' => $config->DATABASE_NAME,
-				'user' => $config->DATABASE_USER,
-				'password' => $config->DATABASE_PASSWORD,
-				'host' => $config->DATABASE_HOST,
-				'port' => $config->DATABASE_PORT,
+				'dbname' => $database->DATABASE_NAME,
+				'user' => $database->DATABASE_USER,
+				'password' => $database->DATABASE_PASSWORD,
+				'host' => $database->DATABASE_HOST,
+				'port' => $database->DATABASE_PORT,
 				'driver'   => 'pdo_mysql'
 			), $doctrineConfig);
 			$entityManager->getConnection()->connect();

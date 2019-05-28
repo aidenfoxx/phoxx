@@ -1,6 +1,6 @@
 <?php
 
 return array(
-	'SMARTY_CACHE' => true,
+	'SMARTY_CACHE' => false,
 	'SMARTY_FORCE_COMPILE' => false
 );

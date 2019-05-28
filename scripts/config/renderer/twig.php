@@ -1,5 +1,5 @@
 <?php
 
 return array(
-	'TWIG_CACHE' => true
+	'TWIG_CACHE' => false
 );

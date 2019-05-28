@@ -4,7 +4,7 @@ return array(
 	/**
 	 * Display messages on error.
 	 */
-	'CORE_DEBUG' => false,
+	'CORE_DEBUG' => true,
 	/**
 	 * Cache driver for the application to use.
 	 *     Options: 'default', 'apcu', 'memcached', 'redis', 'file'
@@ -22,7 +22,7 @@ return array(
 	'CORE_RENDERER' => 'default',
 	/**
 	 * Mail driver for the application to use.
-	 *     Options: 'default', 'database', 'cache'
+	 *     Options: 'default', 'cache'
 	 */
 	'CORE_SESSION' => 'default',
 	/**

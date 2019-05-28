@@ -7,6 +7,7 @@
 		"smarty/smarty": "3.1.*",
 		"doctrine/orm": "2.5.*",
 		"filp/whoops": "2.1.*",
+		"sami/sami": "4.1.*",
 		"mnsami/composer-custom-directory-installer": "1.1.*",
 		"phoxx-mvc/core": "1.0-dev",
 		"phoxx-mvc/package-parameter": "1.0-dev",
@@ -74,7 +75,8 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"@php scripts/generate-config.php"
+			"@php scripts/generate-config.php",
+			"@php scripts/generate-docs.php"
 		]
 	},
 	"classmap-authoritative": true

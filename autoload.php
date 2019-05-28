@@ -26,16 +26,16 @@ spl_autoload_register(function(string $class) {
 	if (isset($classmap[$class]) === true) {
 		include($classmap[$class]['path']);
 	} else {
-		$path = explode('\\', strtolower($class));
+		$path = explode('\\', $class);
 		$namespace = array_shift($path);
 		
-		if ($namespace === 'phoxx') {
+		if ($namespace === 'Phoxx') {
 			$location = array_shift($path);
 
-			if ($location === 'core') {
+			if ($location === 'Core') {
 				$file = realpath(PATH_CORE.'/classes/'.implode('/', $path).'.php');
-			} else if ($location === 'packages') {
-				$package = array_shift($path);
+			} else if ($location === 'Packages') {
+				$package = strtolower(array_shift($path));
 				$file = realpath(PATH_PACKAGES.'/'.$package.'/classes/'.implode('/', $path).'.php');
 			}
 

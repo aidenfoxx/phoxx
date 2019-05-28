@@ -2,8 +2,8 @@
 
 $BLOCK_CONTENT = '
 	<div class="text-center">
-		<h1>Error 404</h1>
-		<p>The page you requested was not found!</p>
+		<h1>Error 500</h1>
+		<p>An unknown error has occured.</p>
 	</div>
 ';
 
