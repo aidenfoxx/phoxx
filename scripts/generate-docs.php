@@ -27,4 +27,4 @@ $sami = new Sami($iterator, array(
 	'cache_dir' => PATH_CACHE.'/sami'
 ));
 
-$sami['project']->update(null, true);
+$sami['project']->update();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88f37b2d881c29c83982df19667cbac9",
+    "content-hash": "2f5c3e1d4f0414d3e9779bfda36467de",
     "packages": [
         {
             "name": "blackfire/php-sdk",
@@ -941,47 +941,47 @@
         },
         {
             "name": "phoxx-mvc/core",
-            "version": "1.0-dev",
+            "version": "dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoxx-mvc/core.git",
                 "reference": "master"
             },
             "type": "library",
-            "time": "2019-05-28T17:36:00+00:00"
+            "time": "2019-05-29T09:43:47+00:00"
         },
         {
             "name": "phoxx-mvc/package-parameter",
-            "version": "1.0-dev",
+            "version": "dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoxx-mvc/package-parameter.git",
                 "reference": "master"
             },
             "type": "library",
-            "time": "2018-12-14T20:07:47+00:00"
+            "time": "2019-05-29T09:49:12+00:00"
         },
         {
             "name": "phoxx-mvc/package-permission",
-            "version": "1.0-dev",
+            "version": "dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoxx-mvc/package-permission.git",
                 "reference": "master"
             },
             "type": "library",
-            "time": "2018-12-14T20:08:16+00:00"
+            "time": "2019-05-29T09:49:49+00:00"
         },
         {
             "name": "phoxx-mvc/package-user",
-            "version": "1.0-dev",
+            "version": "dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoxx-mvc/package-user.git",
                 "reference": "master"
             },
             "type": "library",
-            "time": "2018-12-14T20:08:39+00:00"
+            "time": "2019-05-29T09:50:27+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
