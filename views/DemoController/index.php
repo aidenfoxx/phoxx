@@ -7,4 +7,4 @@ $BLOCK_CONTENT = <<<HTML
 	</div>
 HTML;
 
-include(__DIR__.'/../main.php');
+include __DIR__.'/../main.php';
