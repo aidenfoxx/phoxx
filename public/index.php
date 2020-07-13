@@ -18,7 +18,7 @@ define('PATH_PUBLIC', '');
 /**
  * Register application.
  */
-$bootstrap = array();
+$bootstrap = [];
 
 function register_bootstrap(callable $callback) {
   global $bootstrap;
