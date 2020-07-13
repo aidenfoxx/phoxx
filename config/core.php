@@ -1,32 +1,37 @@
 <?php
 
-return array(
+return [
 	/**
-	 * Display messages on error.
+	 * Display debug information on error.
 	 */
-	'CORE_DEBUG' => true,
+	'CORE_DEBUG' => false,
+
 	/**
 	 * Cache driver for the application to use.
-	 *     Options: 'default', 'apcu', 'memcached', 'redis', 'file'
+	 *   Options: 'default', 'apcu', 'memcached', 'redis', 'file'
 	 */
 	'CORE_CACHE' => 'default',
+
 	/**
 	 * Mail driver for the application to use.
-	 *     Options: 'default', 'smtp'
+	 *   Options: 'default'
 	 */
 	'CORE_MAILER' => 'default',
+
 	/**
 	 * Mail driver for the application to use.
-	 *     Options: 'default', 'smarty', 'twig'
+	 *   Options: 'default', 'smarty', 'twig'
 	 */
 	'CORE_RENDERER' => 'default',
+
 	/**
 	 * Mail driver for the application to use.
-	 *     Options: 'default', 'cache'
+	 *   Options: 'default', 'cache'
 	 */
 	'CORE_SESSION' => 'default',
+
 	/**
 	 * Client side session cookie name.
 	 */
 	'CORE_SESSION_NAME' => 'PHOXX_SESSION'
-);
+];

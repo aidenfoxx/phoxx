@@ -1,82 +1,23 @@
 {
-	"name": "phoxx-mvc/phoxx",
-	"description": "Phoxx MVC base project",
+	"name": "phoxx-mvc",
+	"description": "phoxx-mvc",
+	"type": "project",
+	"license": "proprietary",
 	"require": {
-		"php" : ">=7.1.0",
-		"twig/twig": "2.4.*",
-		"smarty/smarty": "3.1.*",
-		"doctrine/orm": "2.5.*",
-		"filp/whoops": "2.1.*",
-		"sami/sami": "4.1.*",
-		"mnsami/composer-custom-directory-installer": "1.1.*",
-		"phoxx-mvc/core": "dev",
-		"phoxx-mvc/package-parameter": "dev",
-		"phoxx-mvc/package-permission": "dev",
-		"phoxx-mvc/package-user": "dev"
+		"phoxx-mvc/core": "dev-master"
 	},
 	"repositories": [
 		{
-			"type": "package",
-			"package": {
-				"name": "phoxx-mvc/core",
-				"version": "dev",
-				"source": {
-					"type": "git",
-					"url":  "https://github.com/phoxx-mvc/core.git",
-					"reference": "master"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "phoxx-mvc/package-parameter",
-				"version": "dev",
-				"source": {
-					"type": "git",
-					"url":  "https://github.com/phoxx-mvc/package-parameter.git",
-					"reference": "master"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "phoxx-mvc/package-permission",
-				"version": "dev",
-				"source": {
-					"type": "git",
-					"url":  "https://github.com/phoxx-mvc/package-permission.git",
-					"reference": "master"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "phoxx-mvc/package-user",
-				"version": "dev",
-				"source": {
-					"type": "git",
-					"url":  "https://github.com/phoxx-mvc/package-user.git",
-					"reference": "master"
-				}
-			}
+			"type": "vcs",
+			"url":  "https://github.com/phoxx-mvc/core.git"
 		}
 	],
-	"extra": {
-		"installer-paths": {
-			"core": ["phoxx-mvc/core"],
-			"packages/parameter": ["phoxx-mvc/package-parameter"],
-			"packages/permission": ["phoxx-mvc/package-permission"],
-			"packages/user": ["phoxx-mvc/package-user"]
-		}
+	"autoload": {
+		"psr-4": {
+			"Phoxx\\" : "classes"
+		},
+		"files": ["bootstrap.php"]
 	},
-	"scripts": {
-		"post-install-cmd": [
-			"@php scripts/generate-config.php",
-			"@php scripts/generate-docs.php"
-		]
-	},
+	"minimum-stability": "dev",
 	"classmap-authoritative": true
 }
