@@ -1,9 +1,5 @@
 cache/*
 !cache/.gitkeep
 
-public/*
-!public/.htaccess
-!public/index.php
-
 vendor/*
 !vendor/.gitkeep
