@@ -1,23 +1,23 @@
 {
-	"name": "phoxx-mvc",
-	"description": "phoxx-mvc",
-	"type": "project",
-	"license": "proprietary",
-	"require": {
-		"phoxx-mvc/core": "dev-master"
-	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url":  "https://github.com/phoxx-mvc/core.git"
-		}
-	],
-	"autoload": {
-		"psr-4": {
-			"Phoxx\\" : "app"
-		},
-		"files": ["bootstrap.php"]
-	},
-	"minimum-stability": "dev",
-	"classmap-authoritative": true
+  "name": "phoxx-mvc",
+  "description": "phoxx-mvc",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "phoxx-mvc/core": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "https://github.com/phoxx-mvc/core.git"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Phoxx\\" : "app"
+    },
+    "files": ["bootstrap.php"]
+  },
+  "minimum-stability": "dev",
+  "classmap-authoritative": true
 }

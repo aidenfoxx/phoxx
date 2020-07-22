@@ -10,22 +10,22 @@ class DemoController extends FrontController
 {
   public function index(): Response
   {
-    return $this->render(new View('./DemoController/index', array(
+    return $this->render(new View('./DemoController/index', [
       'title' => 'Home'
-    )));
+    ]));
   }
 
   public function pageNotFound(): Response
   {
-    return $this->render(new View('./DemoController/pageNotFound', array(
+    return $this->render(new View('./DemoController/pageNotFound', [
       'title' => '404'
-    )), Response::HTTP_NOT_FOUND);
+    ]), Response::HTTP_NOT_FOUND);
   }
 
   public function internalServerError(): Response
   {
-    return $this->render(new View('./DemoController/internalServerError', array(
+    return $this->render(new View('./DemoController/internalServerError', [
       'title' => '500'
-    )), Response::HTTP_INTERNAL_SERVER_ERROR);
+    ]), Response::HTTP_INTERNAL_SERVER_ERROR);
   }
 }
