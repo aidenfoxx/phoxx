@@ -14,7 +14,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"Phoxx\\" : "classes"
+			"Phoxx\\" : "app"
 		},
 		"files": ["bootstrap.php"]
 	},

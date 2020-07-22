@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	/**
 	 * Databse name.
 	 */
@@ -30,4 +30,4 @@ return array(
 	 * Server port.
 	 */
 	'DATABASE_PORT' => 3306
-);
+];
