@@ -16,3 +16,4 @@ Phoxx is an attempt at creating a modular, lightweight, HMVC framework, based on
 
 - Stuff breaks if the `PATH_*` variables are empty, with `.` being minimum. These paths should always be absolute, except for in tests.
 - Maybe Session and Cache should use "storeValue" as opposed to "setValue"?
+- Check exceptions for consistency in paths.

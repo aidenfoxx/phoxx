@@ -13,7 +13,7 @@ use Phoxx\Core\Http\Response;
 define('PATH_BASE', realpath(__DIR__.'/..'));
 define('PATH_CACHE', realpath(PATH_BASE.'/cache'));
 define('PATH_VENDOR', realpath(PATH_BASE.'/vendor'));
-define('PATH_PUBLIC', '');
+define('PATH_PUBLIC', realpath(PATH_BASE.'/public'));
 
 /**
  * Register application.
