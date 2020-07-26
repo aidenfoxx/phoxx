@@ -6,9 +6,12 @@
  * @package phoxx-mvc
  * @author  Aiden Foxx <aiden@foxx.io>
  */
-use Phoxx\Core\Framework\Application;
+use Phoxx\Core\Framework\ServiceContainer;
+use Phoxx\Core\Http\Dispatcher;
 use Phoxx\Core\Http\Helpers\SimpleRequest;
+use Phoxx\Core\Http\RequestStack;
 use Phoxx\Core\Http\Response;
+use Phoxx\Core\Router\RouteContainer;
 
 define('PATH_BASE', realpath(__DIR__.'/..'));
 define('PATH_CACHE', realpath(PATH_BASE.'/cache'));
@@ -30,15 +33,17 @@ require PATH_VENDOR.'/autoload.php';
 /**
  * Initialize application.
  */
-$application = new Application();
+$routeContainer = new RouteContainer();
+$serviceContainer = new ServiceContainer();
+$dispatcher = new Dispatcher($routeContainer, $serviceContainer, new RequestStack());
 
 error_reporting(0);
 
-set_exception_handler(function () use ($application) {
+set_exception_handler(function () use ($dispatcher) {
   http_response_code(500);
 
-  if (($response = $application->dispatch(new SimpleRequest('_500_'))) instanceof Response) {
-    $application->send($response);
+  if (($response = $dispatcher->dispatch(new SimpleRequest('_500_'))) instanceof Response) {
+    $dispatcher->send($response);
     exit;
   }
 
@@ -46,21 +51,21 @@ set_exception_handler(function () use ($application) {
 });
 
 foreach ($bootstrap as $callback) {
-  $callback($application);
+  $callback($routeContainer, $serviceContainer);
 }
 
 /**
  * Dispatch request.
  */
-if (($response = $application->dispatch(new SimpleRequest($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']))) instanceof Response) {
-  $application->send($response);
+if (($response = $dispatcher->dispatch(new SimpleRequest($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']))) instanceof Response) {
+  $dispatcher->send($response);
   exit;
 }
 
 http_response_code(404);
 
-if (($response = $application->dispatch(new SimpleRequest('_404_'))) instanceof Response) {
-  $application->send($response);
+if (($response = $dispatcher->dispatch(new SimpleRequest('_404_'))) instanceof Response) {
+  $dispatcher->send($response);
   exit;
 }
 
