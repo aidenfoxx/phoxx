@@ -3,11 +3,11 @@
   "description": "phoxx-mvc",
   "type": "project",
   "license": "proprietary",
-  "require": {
-    "phoxx-mvc/core": "dev-master"
-  },
   "config": {
     "classmap-authoritative": true
+  },
+  "require": {
+    "phoxx-mvc/core": "dev-master"
   },
   "repositories": [
     {
@@ -20,6 +20,5 @@
       "Phoxx\\" : "app"
     },
     "files": ["bootstrap.php"]
-  },
-  "minimum-stability": "dev"
+  }
 }

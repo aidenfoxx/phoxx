@@ -18,7 +18,7 @@ register_bootstrap(function (RouteContainer $routeContainer, ServiceContainer $s
   /**
    * Load and register routes from config.
    */
-  foreach ($config->getFile('routes') as $pattern => $action) {
-    $routeContainer->addRoute(new Route($pattern, $action));
+  foreach ($config->open('routes') as $pattern => $action) {
+    $routeContainer->setRoute(new Route($pattern, $action));
   }
 });

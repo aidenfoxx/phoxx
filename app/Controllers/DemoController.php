@@ -2,7 +2,7 @@
 
 namespace Phoxx\Controllers;
 
-use Phoxx\Core\Controllers\FrontController;
+use Phoxx\Core\Controllers\Helpers\FrontController;
 use Phoxx\Core\Http\Response;
 use Phoxx\Core\Renderer\View;
 
