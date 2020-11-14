@@ -3,7 +3,7 @@
 /**
  * Phoxx MVC - Init.
  *
- * @package phoxx-mvc
+ * @package phoxx
  * @author  Aiden Foxx <aiden@foxx.io>
  */
 use Phoxx\Core\Framework\ServiceContainer;
