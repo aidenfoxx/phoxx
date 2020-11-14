@@ -40,12 +40,12 @@ $dispatcher = new Dispatcher($routeContainer, $serviceContainer, new RequestStac
 error_reporting(0);
 
 set_exception_handler(function () use ($dispatcher) {
-  http_response_code(500);
-
   if (($response = $dispatcher->dispatch(new SimpleRequest('_500_'))) instanceof Response) {
     $dispatcher->send($response);
     exit;
   }
+  
+  http_response_code(500);
 
   echo '<h1>Error 500</h1><p>An unknown error has occured.</p>';
 });
@@ -62,11 +62,11 @@ if (($response = $dispatcher->dispatch(new SimpleRequest($_SERVER['REQUEST_URI']
   exit;
 }
 
-http_response_code(404);
-
 if (($response = $dispatcher->dispatch(new SimpleRequest('_404_'))) instanceof Response) {
   $dispatcher->send($response);
   exit;
 }
+
+http_response_code(404);
 
 echo '<h1>Error 404</h1><p>The requested page could not be found.</p>';
