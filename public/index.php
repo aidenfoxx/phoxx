@@ -3,7 +3,7 @@
 /**
  * Phoxx MVC - Init.
  *
- * @package phoxx-mvc
+ * @package phoxx
  * @author  Aiden Foxx <aiden@foxx.io>
  */
 use Phoxx\Core\Exceptions\ResponseException;
@@ -55,6 +55,8 @@ set_exception_handler(function () use ($router) {
     send_response($response);
     exit;
   }
+  
+  http_response_code(500);
 
   http_response_code(500);
 
