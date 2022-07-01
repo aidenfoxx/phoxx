@@ -1,9 +1,8 @@
 <?php
 
-use Phoxx\Core\Framework\ServiceContainer;
-use Phoxx\Core\Router\Route;
-use Phoxx\Core\Router\RouteContainer;
-use Phoxx\Core\Utilities\Config;
+use Phoxx\Core\Http\Router;
+use Phoxx\Core\System\Services;
+use Phoxx\Core\System\Config;
 
 if (!function_exists('register_bootstrap')) {
   return;
@@ -12,13 +11,13 @@ if (!function_exists('register_bootstrap')) {
 /**
 * Bootstrap application.
 */
-register_bootstrap(function (RouteContainer $routeContainer, ServiceContainer $serviceContainer) {
+register_bootstrap(function (Router $router, Services $services) {
   $config = $serviceContainer->getService(Config::class);
 
   /**
    * Load and register routes from config.
    */
   foreach ($config->open('routes') as $pattern => $action) {
-    $routeContainer->setRoute(new Route($pattern, $action));
+    $router->register(new Route($pattern, $action));
   }
 });
