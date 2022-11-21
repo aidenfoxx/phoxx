@@ -58,8 +58,6 @@ set_exception_handler(function () use ($router) {
   
   http_response_code(500);
 
-  http_response_code(500);
-
   echo '<h1>Error 500</h1><p>An unknown error has occured.</p>';
 });
 
