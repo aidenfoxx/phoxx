@@ -51,7 +51,7 @@ $router = new Router($services);
 error_reporting(0);
 
 set_exception_handler(function () use ($router) {
-  if (($router->dispatch(new ServerRequest('_500_'))) instanceof Response) {
+  if (($response = $router->dispatch(new ServerRequest('_500_'))) instanceof Response) {
     send_response($response);
     exit;
   }
